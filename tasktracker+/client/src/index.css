@@ -1,0 +1,129 @@
+html, body, #root, .App {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+* {
+  box-sizing: border-box;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* --- DARK MODE: Apple-like, global, comprehensive (refined) --- */
+html.dark, body.dark, .dark {
+  background: #111215 !important;
+  color: #f3f4f6 !important;
+}
+
+body.dark, .dark {
+  background: #111215 !important;
+  color: #f3f4f6 !important;
+}
+
+.dark .app-root, .dark .main-content, .dark .mainContent, .dark .main, .dark .App, .dark #root {
+  background: #111215 !important;
+  color: #f3f4f6 !important;
+}
+
+.dark .glass, .dark .card, .dark .mainContent, .dark .main-content, .dark .main, .dark .App, .dark .profile-root, .dark .section, .dark .container, .dark .box, .dark .kpiCard, .dark .statCard, .dark .chartContainer, .dark .filtersSection, .dark .filters-box, .dark .teamCard, .dark .teamMemberCard, .dark .integrationCard, .dark .billingCard, .dark .dangerZone, .dark .emptyState, .dark .modal, .dark .tabList, .dark .sidebar, .dark .header, .dark .navbar, .dark .footer {
+  background: #23272f !important;
+  color: #f3f4f6 !important;
+  border-color: #4b5563 !important;
+  box-shadow: 0 4px 24px 0 #00000033 !important;
+}
+
+.dark input, .dark textarea, .dark select {
+  background: #23272f !important;
+  color: #f3f4f6 !important;
+  border-color: #4b5563 !important;
+}
+
+.dark input:focus, .dark textarea:focus, .dark select:focus {
+  outline: 2px solid #6366f1 !important;
+  border-color: #6366f1 !important;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #23272f;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* --- FORCE TRUE BLACK BACKGROUND FOR ALL PAGES IN DARK MODE --- */
+html.dark, body.dark, #root.dark, .app-root.dark, .min-h-screen.dark, .w-full.dark, .dark {
+  background: #111215 !important;
+}
+
+#root, .app-root, .min-h-screen, .w-full {
+  background: inherit !important;
+}
+
+:root {
+  --primary: #4ecdc4;
+  --success: #2ecc71;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --info: #45b7d1;
+  --light: #ecf0f1;
+  --dark: #2c3e50;
+}

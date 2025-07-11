@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # Backend service
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGODB_URI=${MONGODB_URI}
+              - JWT_SECRET=${JWT_SECRET}
+      - CLIENT_URL=http://localhost:5173
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    networks:
+      - tasktracker-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend service  
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+    networks:
+      - tasktracker-network
+    restart: unless-stopped
+
+  # Development frontend (for hot reload)
+  frontend-dev:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    networks:
+      - tasktracker-network
+    profiles:
+      - dev
+
+networks:
+  tasktracker-network:
+    driver: bridge
+
+volumes:
+  tasktracker-data:
+
