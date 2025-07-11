@@ -22,9 +22,13 @@ const app = express();
 // Security HTTP headers
 app.use(helmet());
 // CORS configuration: allow localhost origins and credentials for dev
+const allowedOrigins = [
+  /^http:\/\/localhost:\d+$/,
+  'https://www.aurelianoceballos.com'
+];
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
+    if (!origin || allowedOrigins.some(o => (typeof o === 'string' ? o === origin : o.test(origin)))) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
