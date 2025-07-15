@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { login, reset } from '../../store/slices/authSlice';
 
-console.log('LoginForm mounted'); // Debug: check if remounting
-
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -23,7 +21,6 @@ const LoginForm = () => {
   );
 
   useEffect(() => {
-    console.log('useEffect', { isError, isSuccess, user, message });
     if (isError) {
       setIsSubmitting(false); // Always stop loading on error
       if (message && message.toLowerCase().includes('invalid credentials')) {
@@ -65,7 +62,6 @@ const LoginForm = () => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    console.log('onChange', name, value);
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -87,7 +83,6 @@ const LoginForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(reset()); // Clear previous errors/loading before new login
-    console.log('onSubmit', { email, password });
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -99,8 +94,6 @@ const LoginForm = () => {
     const userData = { email, password };
     dispatch(login(userData));
   };
-
-  console.log('LoginForm render', { formData, errors });
 
   const styles = {
     container: {

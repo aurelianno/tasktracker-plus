@@ -315,28 +315,23 @@ const TeamMemberList = ({ team, onTeamUpdate }) => {
         onConfirm={async () => {
           if (confirmRoleChange.member && confirmRoleChange.newRole) {
             setUpdatingRoleId(confirmRoleChange.member.userId._id);
-            console.log('[RoleChange] Attempting to change role', {
-              teamId: team._id,
-              memberId: confirmRoleChange.member.userId._id,
-              newRole: confirmRoleChange.newRole,
-              currentRole: confirmRoleChange.member.role
-            });
+            // Attempt to change the member's role or transfer ownership
             try {
               let apiResult;
               if (confirmRoleChange.newRole === 'owner') {
                 apiResult = await teamAPI.transferOwnership(team._id, confirmRoleChange.member.userId._id);
-                console.log('[RoleChange] Ownership transfer API result:', apiResult);
+                // Ownership transfer completed
               } else {
                 apiResult = await teamAPI.changeMemberRole(team._id, confirmRoleChange.member.userId._id, confirmRoleChange.newRole);
-                console.log('[RoleChange] Role change API result:', apiResult);
+                // Role change completed
               }
               if (onTeamUpdate) await onTeamUpdate();
             } catch (err) {
+              // Handle errors and notify user
               let msg = 'Failed to update role';
               if (err?.response?.data?.message) {
                 msg = err.response.data.message;
               }
-              console.error('[RoleChange] Error:', err, 'Response:', err?.response);
               setNotification({ isOpen: true, type: 'error', message: msg });
             } finally {
               setUpdatingRoleId(null);
